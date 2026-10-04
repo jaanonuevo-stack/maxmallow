@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Live Character Counter</title>
+<style>
+  :root{
+    --ink:#000;
+    --paper:#fff;
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  *{box-sizing:border-box;}
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){ --ink:#eee; --paper:#111; }
+  }
+  :root[data-theme="dark"]{ --ink:#eee; --paper:#111; }
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:Arial, Helvetica, sans-serif;
+    padding:20px;
+  }
+  h2{
+    text-align:center;
+    font-size:1.3rem;
+    margin:10px 0 20px;
+  }
+ .label{
+    font-weight:bold;
+    margin-bottom:4px;
+    text-align:left;
+    max-width:600px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  .box{
+    position:relative;
+    border:1px solid var(--ink);
+    max-width:600px;
+    margin:0 auto;
+    padding:8px 10px 30px;
+  }
+  .row{
+    display:flex;
+    align-items:baseline;
+    gap:4px;
+    margin-bottom:2px;
+  }
+  .row span{
+    font-weight:bold;
+  }
+  .row input{
+    flex:1;
+    border:none;
+    outline:none;
+    font-family:inherit;
+    font-size:1rem;
+    background:transparent;
+    color:var(--ink);
+  }
+  .count{
+    position:absolute;
+    bottom:6px;
+    right:10px;
+    font-size:0.8rem;
+  }
+  .preview-title{
+    max-width:600px;
+    margin:20px auto 4px;
+    font-weight:bold;
+  }
+  .preview-line{
+    max-width:600px;
+    margin:0 auto;
+  }
+  .groups{
+    max-width:600px;
+    margin:24px auto 0;
+  }
+  .groups h3{
+    margin:16px 0 6px;
+    font-size:1rem;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(9,1fr);
+    gap:4px;
+  }
+  .cell{
+    border:1px solid var(--ink);
+    text-align:center;
+    padding:4px 0;
+    font-size:0.85rem;
+  }
+  .cell .ch{
+    display:block;
+  }
+  .cell .n{
+    display:block;
+    font-weight:bold;
+  }
+  .cell.active{
+    background:#ffe9a8;
+  }
+  :root[data-theme="dark"] .cell.active,
+  @media (prefers-color-scheme: dark){
+    .cell.active{ background:#5a4a1a; }
+  }
+</style>
+</head>
+<body>
+
+<h2>Live Character Counter</h2>
+<div class="label">Enter your message:</div>
+
+<div class="box">
+  <div class="row"><span>Name:</span><input id="name" type="text" maxlength="150" autocomplete="off"></div>
+  <div class="row"><span>Section:</span><input id="section" type="text" maxlength="150" autocomplete="off"></div>
+  <div class="row"><span>Address:</span><input id="address" type="text" maxlength="150" autocomplete="off"></div>
+  <div class="count" id="totalCount">0 / 150</div>
+</div>
+
+<div class="preview-title">Live Preview</div>
+<div class="preview-line" id="previewLine">Name: Section: Address:</div>
+
+<div class="groups">
+  <h3>Letters</h3>
+  <div class="grid" id="letterGrid"></div>
+  <h3>Numbers</h3>
+  <div class="grid" id="numberGrid"></div>
+</div>
+
+<script>
+  const LIMIT = 150;
+  const fields = [
+    document.getElementById('name'),
+    document.getElementById('section'),
+    document.getElementById('address')
+  ];
+
+  const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  const NUMBERS = '123456789'.split('');
+
+  const letterGrid = document.getElementById('letterGrid');
+  const numberGrid = document.getElementById('numberGrid');
+  const cells = {};
+
+  function buildGrid(container, chars){
+    chars.forEach(ch => {
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      cell.innerHTML = '<span class="ch">' + ch + '</span><span class="n">0</span>';
+      container.appendChild(cell);
+      cells[ch] = cell;
+    });
+  }
+  buildGrid(letterGrid, LETTERS);
+  buildGrid(numberGrid, NUMBERS);
+
+  function update(){
+    let total = 0;
+    let combined = '';
+
+    fields.forEach(f => {
+      total += f.value.length; // empty field always counts as 0
+      combined += f.value;
+    });
+
+    document.getElementById('totalCount').textContent = total + ' / ' + LIMIT;
+
+    document.getElementById('previewLine').textContent =
+      'Name: ' + fields[0].value + ' Section: ' + fields[1].value + ' Address: ' + fields[2].value;
+
+    const counts = {};
+    LETTERS.concat(NUMBERS).forEach(ch => counts[ch] = 0);
+    combined.toUpperCase().split('').forEach(ch => {
+      if(counts.hasOwnProperty(ch)) counts[ch]++;
+    });
+    LETTERS.concat(NUMBERS).forEach(ch => {
+      const n = counts[ch];
+      cells[ch].querySelector('.n').textContent = n;
+      cells[ch].classList.toggle('active', n > 0);
+    });
+  }
+
+  fields.forEach(f => f.addEventListener('input', update));
+  update();
+</script>
+</body>
+</html>

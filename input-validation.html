@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complete Sign-Up</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      background: #e8ecf5;
+      color: #1b2540;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 420px;
+      margin: 24px;
+      padding: 32px 30px 36px;
+      background: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(30, 45, 90, 0.12);
+    }
+
+    h2 {
+      margin: 0 0 24px;
+      text-align: center;
+      font-size: 1.6rem;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 1rem;
+      border: 1.5px solid #c4cad8;
+      border-radius: 8px;
+      background: #fff;
+      outline: none;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    input:focus {
+      border-color: #1a5fd0;
+    }
+
+    input.invalid {
+      border-color: #c0213f;
+      background: #fdf1f3;
+    }
+
+    input.valid {
+      border-color: #1f9d55;
+      background: #eaf7ef;
+    }
+
+    .error-message {
+      display: none;
+      margin-top: 5px;
+      font-size: 0.8rem;
+      color: #c0213f;
+    }
+
+    input.invalid + .error-message {
+      display: block;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 8px;
+      padding: 13px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      background: #1a5fd0;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    button:hover {
+      background: #1450b3;
+    }
+
+    button:focus-visible {
+      outline: 3px solid #9fc0f5;
+      outline-offset: 2px;
+    }
+
+    .success-message {
+      display: none;
+      margin-top: 16px;
+      padding: 12px;
+      text-align: center;
+      font-weight: 600;
+      color: #14683a;
+      background: #e3f6ea;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Complete Sign-Up</h2>
+
+    <form id="signupForm" novalidate>
+      <div class="form-group">
+        <label for="username">Username (alphanumeric, 4-12 chars)</label>
+        <input type="text" id="username" placeholder="e.g. coder99" autocomplete="off">
+        <div class="error-message">Must be 4-12 characters and contain only letters and numbers.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number (10 digits)</label>
+        <input type="text" id="phone" placeholder="e.g. 5551234567" inputmode="numeric" autocomplete="off">
+        <div class="error-message">Please enter a valid 10-digit phone number.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password (min 8 chars, 1 letter &amp; 1 number)</label>
+        <input type="password" id="password" autocomplete="new-password">
+        <div class="error-message">Requires at least 8 characters with at least 1 letter and 1 number.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" autocomplete="new-password">
+        <div class="error-message">Passwords do not match.</div>
+      </div>
+
+      <button type="submit">Create Account</button>
+      <div class="success-message" id="successMessage">Account created successfully!</div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("signupForm");
+    const username = document.getElementById("username");
+    const phone = document.getElementById("phone");
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirmPassword");
+    const successMessage = document.getElementById("successMessage");
+
+    // Validation rules: each returns true when the value is valid
+    const validators = {
+      username: (v) => /^[a-zA-Z0-9]{4,12}$/.test(v),
+      phone: (v) => /^\d{10}$/.test(v),
+      password: (v) => /^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test(v),
+      confirmPassword: (v) => v !== "" && v === password.value
+    };
+
+    function validateField(input) {
+      const isValid = validators[input.id](input.value);
+      input.classList.toggle("invalid", !isValid);
+      input.classList.toggle("valid", isValid);
+      return isValid;
+    }
+
+    // Live validation as the user types
+    [username, phone, password, confirmPassword].forEach((input) => {
+      input.addEventListener("input", () => {
+        successMessage.style.display = "none";
+        validateField(input);
+        // Re-check the confirm field when the password changes
+        if (input === password && confirmPassword.value !== "") {
+          validateField(confirmPassword);
+        }
+      });
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const results = [username, phone, password, confirmPassword].map(validateField);
+      const allValid = results.every(Boolean);
+
+      if (allValid) {
+        successMessage.style.display = "block";
+        form.reset();
+        [username, phone, password, confirmPassword].forEach((i) => i.classList.remove("valid", "invalid"));
+      } else {
+        successMessage.style.display = "none";
+      }
+    });
+  </script>
+
+</body>
+</html>

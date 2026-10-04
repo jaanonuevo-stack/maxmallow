@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Lab Activity</title>
+</head>
+<body>
+
+<h1>Student Information</h1>
+
+<form id="studentForm">
+    <label for="firstName">First Name:</label><br>
+    <input type="text" id="firstName" value="Julianna Maxeen"><br><br>
+
+    <label for="lastName">Last Name:</label><br>
+    <input type="text" id="lastName" value="Anonuevo"><br><br>
+
+    <label for="age">Age:</label><br>
+    <input type="number" id="age" value="19"><br><br>
+
+    <label for="section">Section:</label><br>
+    <input type="text" id="section" value="2-IT3"><br><br>
+
+    <label for="address">Address:</label><br>
+    <input type="text" id="address" value="Amaia Scapes Brgy. Barandal Calamba"><br><br>
+
+    <label for="program">Program:</label><br>
+    <input type="text" id="program" value="BSIT"><br><br>
+
+    <label for="email">CCC Email:</label><br>
+    <input type="email" id="email" value="janonuevo@ccc.edu.ph"><br><br>
+
+    <label for="hobby">Hobby:</label><br>
+    <input type="text" id="hobby" value="playing online games"><br><br>
+
+    <label for="favoriteColor">Favorite Color:</label><br>
+    <input type="text" id="favoriteColor" value="Pink"><br><br>
+
+    <label for="favoriteFood">Favorite Food:</label><br>
+    <input type="text" id="favoriteFood" value="Chicken"><br><br>
+
+    <button type="button" onclick="displayStudent()">Show Information</button>
+</form>
+
+<p id="output"></p>
+
+<script>
+    function displayStudent() {
+        let student = {
+            firstName: document.getElementById("firstName").value,
+            lastName: document.getElementById("lastName").value,
+            age: document.getElementById("age").value,
+            section: document.getElementById("section").value,
+            address: document.getElementById("address").value,
+            program: document.getElementById("program").value,
+            email: document.getElementById("email").value,
+            hobby: document.getElementById("hobby").value,
+            favoriteColor: document.getElementById("favoriteColor").value,
+            favoriteFood: document.getElementById("favoriteFood").value
+        };
+
+        document.getElementById("output").innerHTML =
+            "First Name: " + student.firstName + "<br>" +
+            "Last Name: " + student.lastName + "<br>" +
+            "Age: " + student.age + "<br>" +
+            "Section: " + student.section + "<br>" +
+            "Address: " + student.address + "<br>" +
+            "Program: " + student.program + "<br>" +
+            "Email: " + student.email + "<br>" +
+            "Hobby: " + student.hobby + "<br>" +
+            "Favorite Color: " + student.favoriteColor + "<br>" +
+            "Favorite Food: " + student.favoriteFood;
+    }
+</script>
+
+</body>
+</html>

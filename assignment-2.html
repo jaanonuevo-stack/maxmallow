@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Class Attendance</title>
+
+  <style>
+    :root {
+      --pink: #d63384;
+      --pink-dark: #a8235f;
+      --pink-light: #fdf0f5;
+      --pink-border: #f3c9db;
+      --text: #4a1d33;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px 24px;
+      background: var(--pink-light);
+      color: var(--text);
+      font-family: "Segoe UI", Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 1100px;
+      padding: 48px 56px;
+      background: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 6px 24px rgba(214, 51, 132, 0.15);
+      align-self: flex-start;
+    }
+
+    h1 {
+      margin: 12px 0 40px;
+      font-size: 2.6rem;
+      letter-spacing: 1px;
+      text-align: center;
+      color: var(--pink-dark);
+    }
+
+    h3 {
+      margin: 36px 0 14px;
+      font-size: 1.5rem;
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+    }
+
+    input {
+      flex: 1;
+      min-width: 0;
+      padding: 16px 18px;
+      font-size: 1.2rem;
+      color: var(--text);
+      border: 2px solid var(--pink);
+      border-radius: 8px;
+    }
+
+    button {
+      padding: 16px 28px;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #ffffff;
+      background: var(--pink);
+      border: 0;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: var(--pink-dark);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      padding: 18px;
+      font-size: 1.2rem;
+      text-align: center;
+      color: #ffffff;
+      background: var(--pink);
+    }
+
+    td {
+      padding: 18px;
+      font-size: 1.15rem;
+      text-align: center;
+      border: 1px solid var(--pink-border);
+    }
+
+    tbody tr:nth-child(odd) {
+      background: #fff7fa;
+    }
+
+    .empty {
+      padding: 16px;
+      color: #8a5a72;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <h1>Class Attendance</h1>
+
+    <div class="row">
+      <input id="name" type="text" placeholder="Enter full name" autocomplete="off">
+      <button id="add">Add Attendance</button>
+    </div>
+
+    <h3>Attendance List</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Student Name</th>
+            <th>Time Recorded</th>
+          </tr>
+        </thead>
+        <tbody id="list"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const attendance = [];
+
+    const nameInput = document.getElementById("name");
+    const addButton = document.getElementById("add");
+    const list = document.getElementById("list");
+
+    function render() {
+      if (attendance.length === 0) {
+        list.innerHTML = '<tr><td colspan="3" class="empty">No one has checked in yet.</td></tr>';
+        return;
+      }
+
+      list.innerHTML = "";
+
+      for (let i = 0; i < attendance.length; i++) {
+        const row = document.createElement("tr");
+
+        row.innerHTML =
+          "<td>" + (i + 1) + "</td>" +
+          "<td></td>" +
+          "<td>" + attendance[i].time + "</td>";
+
+        row.children[1].textContent = attendance[i].name;
+
+        list.appendChild(row);
+      }
+    }
+
+    function addAttendance() {
+      const name = nameInput.value.trim();
+
+      if (name === "") {
+        alert("Please enter a student name");
+        return;
+      }
+
+      const time = new Date().toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+      });
+
+      attendance.push({ name: name, time: time });
+
+      nameInput.value = "";
+      nameInput.focus();
+      render();
+    }
+
+    addButton.addEventListener("click", addAttendance);
+
+    nameInput.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        addAttendance();
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>

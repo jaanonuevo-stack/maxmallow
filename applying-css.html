@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hello, Barbie!</title>
+
+<!-- internal style -->
+<style>
+
+  body {
+    /* background-color */
+    background-color: #ffffff;
+    font-family: "Comic Sans MS", "Segoe UI", cursive, sans-serif;
+    margin: 0;
+    padding: 10px 440px 60px 40px;
+    max-width: 1200px;
+  }
+
+  h1 {
+    margin-top: 0;
+    text-align: center;
+    color: #ff2e93;
+    font-size: 48px;
+    text-shadow: 2px 2px #ffb6d9;
+  }
+
+  h2 {
+    color: #000000;
+    font-size: 24px;
+    border-bottom: 3px dotted #ff69b4;
+    padding-bottom: 5px;
+  }
+
+  p {
+    color: #000000;
+    font-size: 17px;
+    line-height: 1.5em;
+  }
+
+  .logo {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 400px;
+  }
+
+  form {
+    margin-top: 20px;
+  }
+
+  label {
+    display: block;
+    color: #d6006e;
+    font-weight: bold;
+    margin-top: 15px;
+    font-size: 16px;
+  }
+
+  select,
+  textarea,
+  input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 6px;
+    border-radius: 10px;
+    font-size: 15px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    border: 2px solid #ff69b4;
+    color: #000000;
+  }
+
+  textarea {
+    resize: vertical;
+    height: 80px;
+  }
+
+  .checkbox-group {
+    margin-top: 8px;
+  }
+
+  .checkbox-item {
+    display: block;
+    font-weight: normal;
+    margin-top: 6px;
+    color: #000000;
+  }
+
+  .rating {
+    margin-top: 8px;
+  }
+
+  .rating label {
+    display: inline-block;
+    font-weight: normal;
+    margin-right: 12px;
+    color: #000000;
+  }
+
+  input[type="submit"] {
+    display: block;
+    margin: 25px auto 0 auto;
+    background-color: #ff2e93;
+    color: #ffffff;
+    border: none;
+    padding: 12px 35px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+  }
+
+  input[type="submit"]:hover {
+    background-color: #d6006e;
+  }
+
+</style>
+</head>
+
+<body>
+
+    <img src="barbie-logo.png" alt="Barbie logo" class="logo">
+
+    <h1>ᨳଓ HELLO, BARBIE! Welcome To My Website 𐙚 ̊</h1>
+
+    <p>
+      Welcome to our Barbie-themed website! Here you can pick your favorite
+      Barbie movie, choose your favorite character, rate the movie, and tell
+      us why you love it. Have fun, Barbie fans!
+    </p>
+
+    <form action="#" method="get">
+
+      <h2>Which Barbie movie is your favorite?</h2>
+      <label>Choose up to 3 movies:</label>
+      <div class="checkbox-group">
+        <label class="checkbox-item"><input type="checkbox" name="movie" value="princess-pauper"> Barbie as the Princess and the Pauper</label>
+        <label class="checkbox-item"><input type="checkbox" name="movie" value="12-dancing"> 👑 Barbie in the 12 Dancing Princesses</label>
+        <label class="checkbox-item"><input type="checkbox" name="movie" value="diamond-castle"> 💎 Barbie & the Diamond Castle</label>
+        <label class="checkbox-item"><input type="checkbox" name="movie" value="mermaid-tale"> 🧜‍♀️ Barbie in a Mermaid Tale</label>
+        <label class="checkbox-item"><input type="checkbox" name="movie" value="popstar"> 🎤 Barbie: The Princess & the Popstar</label>
+        <label class="checkbox-item"><input type="checkbox" name="movie" value="swan-lake"> 🦢 Barbie of Swan Lake</label>
+        <label class="checkbox-item"><input type="checkbox" name="movie" value="fairytopia"> 🧚 Barbie Fairytopia</label>
+        <label class="checkbox-item"><input type="checkbox" name="movie" value="mariposa"> 🦋 Barbie: Mariposa</label>
+        <label class="checkbox-item"><input type="checkbox" name="movie" value="pegasus"> 🐴 Barbie and the Magic of Pegasus</label>
+        <label class="checkbox-item"><input type="checkbox" name="movie" value="barbie-2023"> 💖 Barbie (2023)</label>
+      </div>
+
+      <h2>Who is your favorite Barbie character?</h2>
+      <label for="character">Choose a character:</label>
+      <select id="character" name="character">
+        <option value="barbie">Barbie</option>
+        <option value="ken">Ken</option>
+        <option value="skipper">Skipper</option>
+        <option value="teresa">Teresa</option>
+        <option value="raquelle">Raquelle</option>
+        <option value="chelsea">Chelsea</option>
+      </select>
+
+      <h2>How would you rate the movie?</h2>
+      <div class="rating">
+        <label><input type="radio" name="rating" value="1"> 1 ⭐</label>
+        <label><input type="radio" name="rating" value="2"> 2 ⭐</label>
+        <label><input type="radio" name="rating" value="3"> 3 ⭐</label>
+        <label><input type="radio" name="rating" value="4"> 4 ⭐</label>
+        <label><input type="radio" name="rating" value="5"> 5 ⭐</label>
+      </div>
+
+      <h2>Tell us why!</h2>
+      <label for="comment">Your comment:</label>
+      <textarea id="comment" name="comment" placeholder="Tell us why you love this movie..."></textarea>
+
+      <input type="submit" value="Submit 💖">
+
+    </form>
+
+</body>
+</html>
