@@ -241,3 +241,15 @@ body.is-home main{display:flex;flex-direction:column;min-height:calc(100vh - 90p
 .lb.tall figure{margin:3rem auto 2rem}
 .lb.tall img{max-height:none;width:min(900px,92vw)}
 .lb button{position:fixed;z-index:60}
+
+/* back to portfolio: clear pill button + floating shortcut */
+.back-btn,.back-float{display:inline-flex;align-items:center;gap:.6rem;padding:.7rem 1.5rem;border-radius:999px;
+  background:var(--blush);color:var(--w800);font-weight:500;font-size:1rem;border:1px solid var(--cream);
+  box-shadow:0 8px 24px rgba(20,2,8,.4);transition:transform .25s,background .25s,opacity .25s}
+.back-btn{margin-bottom:1.6rem}
+.back-btn .arr,.back-float .arr{font-size:1.25rem;line-height:1}
+.back-btn:hover,.back-float:hover{background:var(--cream);transform:translateX(-4px)}
+.back-float{position:fixed;left:1.1rem;bottom:calc(1.1rem + env(safe-area-inset-bottom,0px));z-index:40;
+  opacity:0;pointer-events:none;transform:translateY(14px)}
+.back-float.show{opacity:1;pointer-events:auto;transform:none}
+.back-float.show:hover{transform:translateX(-4px)}

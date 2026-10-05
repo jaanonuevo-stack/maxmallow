@@ -57,3 +57,10 @@ if(form){
     location.href="mailto:"+MY_EMAIL+"?subject="+encodeURIComponent(d.get("subject"))+"&body="+encodeURIComponent(body);
   });
 }
+
+// floating "back to portfolio" button appears after scrolling
+(function(){
+  const bf=document.querySelector(".back-float"); if(!bf) return;
+  const t=()=>bf.classList.toggle("show",window.scrollY>240);
+  window.addEventListener("scroll",t,{passive:true}); t();
+})();
