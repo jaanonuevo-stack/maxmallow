@@ -257,3 +257,23 @@ body.is-home main{display:flex;flex-direction:column;min-height:calc(100vh - 90p
   opacity:0;pointer-events:none;transform:translateY(14px)}
 .back-float.show{opacity:1;pointer-events:auto;transform:none}
 .back-float.show:hover{transform:translateX(-4px)}
+
+/* mobile: whole menu visible and Home fits better */
+@media (max-width:760px){
+  .top{padding:.9rem 1rem .4rem;gap:.6rem}
+  .brand{font-size:1.8rem}
+  .pill{width:100%;justify-content:space-between;overflow-x:visible}
+  .pill a{padding:.45rem .55rem;font-size:.84rem}
+  .is-home .hero{padding-top:.2rem}
+  .is-home .hello{font-size:.78rem;margin-bottom:.7rem;letter-spacing:.06em}
+  .is-home .arch{height:clamp(150px,29vh,300px)}
+  .is-home .wordmark{font-size:clamp(2.8rem,16vw,5rem)}
+  .is-home .intro{font-size:.88rem;line-height:1.5;margin-top:.6rem}
+  .is-home .ribbons{height:150px}
+}
+
+/* contact form status */
+.form-status{min-height:1.4rem;margin-top:.2rem;font-size:.95rem}
+.form-status.ok{color:var(--blush)}
+.form-status.bad{color:#ffb4a8}
+.c-form .btn[disabled]{opacity:.6;cursor:wait}

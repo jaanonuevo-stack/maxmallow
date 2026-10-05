@@ -48,14 +48,33 @@ const yr=document.getElementById("yr"); if(yr) yr.textContent=new Date().getFull
   document.addEventListener("keydown",e=>{if(e.key==="Escape") close();});
 })();
 
-// contact form -> opens the visitor's email app
+// contact form: sends straight to the owner's inbox through Formspree.
+// Paste your Formspree form link ID below (the part after /f/). Until then it falls back to opening an email draft.
+const FORMSPREE_ID = "moejagjo";
+
 const form=document.getElementById("contactForm");
 if(form){
-  form.addEventListener("submit",e=>{
+  const status=document.getElementById("formStatus");
+  const sendBtn=form.querySelector("button[type=submit]");
+  function say(msg,ok){ if(!status) return; status.textContent=msg; status.className="form-status "+(ok?"ok":"bad"); }
+  form.addEventListener("submit",async e=>{
     e.preventDefault();
     const d=new FormData(form);
-    const body="From: "+d.get("name")+" ("+d.get("email")+")\n\n"+d.get("message");
-    location.href="mailto:"+MY_EMAIL+"?subject="+encodeURIComponent(d.get("subject"))+"&body="+encodeURIComponent(body);
+    if(!FORMSPREE_ID){
+      const body="From: "+d.get("name")+" ("+d.get("email")+")\n\n"+d.get("message");
+      location.href="mailto:"+MY_EMAIL+"?subject="+encodeURIComponent(d.get("subject"))+"&body="+encodeURIComponent(body);
+      return;
+    }
+    d.set("_subject",d.get("subject"));
+    sendBtn.disabled=true; sendBtn.textContent="Sending ✧"; say("",true);
+    try{
+      const r=await fetch("https://formspree.io/f/"+FORMSPREE_ID,{method:"POST",body:d,headers:{Accept:"application/json"}});
+      if(r.ok){ form.reset(); say("Message sent! Thank you ♡ I'll reply soon. ⋆.𐙚",true); }
+      else{ say("Oops, the message didn't send. Please try again, or email me directly at "+MY_EMAIL+".",false); }
+    }catch(err){
+      say("Oops, no connection. Please try again, or email me directly at "+MY_EMAIL+".",false);
+    }
+    sendBtn.disabled=false; sendBtn.textContent="Send message ✧";
   });
 }
 
