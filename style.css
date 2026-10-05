@@ -237,9 +237,13 @@ body.is-home main{display:flex;flex-direction:column;min-height:calc(100vh - 90p
 .tile .ph{height:100%}
 /* lightbox: tall infographics scroll */
 .lb{overflow:auto}
-.lb.tall{place-items:start center}
-.lb.tall figure{margin:3rem auto 2rem}
-.lb.tall img{max-height:none;width:min(900px,92vw)}
+.lb img{max-height:calc(100vh - 9rem);max-width:92vw;object-fit:contain}
+.lb.tall img{cursor:zoom-in}
+.lb.zoom{place-items:start center}
+.lb.zoom figure{margin:3rem auto 2rem}
+.lb.zoom img{max-height:none;width:min(900px,92vw);cursor:zoom-out}
+.lb .hint{margin-top:.3rem;font-size:.9rem;color:var(--glow);opacity:.9}
+.lb:not(.tall) .hint{display:none}
 .lb button{position:fixed;z-index:60}
 
 /* back to portfolio: clear pill button + floating shortcut */

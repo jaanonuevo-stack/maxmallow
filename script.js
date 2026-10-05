@@ -24,20 +24,21 @@ const yr=document.getElementById("yr"); if(yr) yr.textContent=new Date().getFull
 (function(){
   const items=document.querySelectorAll("[data-full]"); if(!items.length) return;
   const lb=document.createElement("div"); lb.className="lb"; lb.setAttribute("role","dialog"); lb.setAttribute("aria-modal","true");
-  lb.innerHTML='<button type="button">close ✧</button><figure><div class="slot"></div><figcaption></figcaption></figure>';
+  lb.innerHTML='<button type="button">close ✧</button><figure><div class="slot"></div><figcaption></figcaption><p class="hint"></p></figure>';
   document.body.appendChild(lb);
-  const slot=lb.querySelector(".slot"), cap=lb.querySelector("figcaption"), btn=lb.querySelector("button");
+  const slot=lb.querySelector(".slot"), cap=lb.querySelector("figcaption"), btn=lb.querySelector("button"), hint=lb.querySelector(".hint");
+  const HINT_IN="Tap the image to zoom in and read the details", HINT_OUT="Tap the image to see the full page again";
   let last=null;
   function open(el){
     last=el; slot.innerHTML="";
     const img=new Image(); img.alt=el.dataset.cap||"";
-    img.onload=()=>{slot.innerHTML="";slot.appendChild(img);lb.classList.toggle("tall",img.naturalHeight/img.naturalWidth>1.5)};
+    img.onload=()=>{slot.innerHTML="";slot.appendChild(img);const tall=img.naturalHeight/img.naturalWidth>1.8;lb.classList.toggle("tall",tall);lb.classList.remove("zoom");hint.textContent=HINT_IN;lb.scrollTop=0;if(tall){img.addEventListener("click",()=>{const z=lb.classList.toggle("zoom");hint.textContent=z?HINT_OUT:HINT_IN;lb.scrollTop=0;});}};
     img.onerror=()=>{slot.innerHTML='<div class="none">⋆.𐙚<br>Add your image at<br><b>'+el.dataset.full+'</b></div>'};
     img.src=el.dataset.full;
     cap.textContent=el.dataset.cap||"";
     lb.classList.add("open"); btn.focus();
   }
-  function close(){lb.classList.remove("open","tall"); if(last) last.focus();}
+  function close(){lb.classList.remove("open","tall","zoom"); if(last) last.focus();}
   items.forEach(el=>{
     el.addEventListener("click",()=>open(el));
     el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();open(el);}});
